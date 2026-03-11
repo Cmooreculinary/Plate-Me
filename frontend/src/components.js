@@ -687,6 +687,38 @@ export const QuickStats = () => {
   );
 };
 
+// Trending This Week Widget
+export const TrendingWeek = () => {
+  const trending = [
+    { title: "Chocolate Elegance", views: "8.1k", trend: "+24%" },
+    { title: "Nordic Influence", views: "3.1k", trend: "+18%" },
+    { title: "Strawberry Spheres", views: "7.2k", trend: "+15%" }
+  ];
+
+  return (
+    <div className="bg-surface-dark border border-slate-800 rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <span className="material-symbols-outlined text-primary">trending_up</span>
+        <h3 className="text-white text-lg font-bold">Trending This Week</h3>
+      </div>
+      <div className="space-y-3">
+        {trending.map((item, idx) => (
+          <div key={idx} className="flex items-center justify-between p-3 bg-black/30 rounded-lg hover:bg-black/50 transition-colors cursor-pointer">
+            <div className="flex items-center gap-3">
+              <div className="text-primary font-bold text-lg">#{idx + 1}</div>
+              <div>
+                <div className="text-white text-sm font-semibold">{item.title}</div>
+                <div className="text-slate-500 text-xs">{item.views} views</div>
+              </div>
+            </div>
+            <div className="text-green-400 text-xs font-bold">{item.trend}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // Daily Garnish Tip Widget
 export const DailyTip = () => {
   const handleReadGuide = (e) => {
