@@ -637,6 +637,56 @@ export const MasonryGrid = ({ activeFilter, searchQuery, activeSkillLevel, sortB
   );
 };
 
+// Quick Stats Widget
+export const QuickStats = () => {
+  const [stats, setStats] = useState({
+    favorites: 0,
+    completed: 0,
+    totalCards: 19
+  });
+
+  useEffect(() => {
+    // Get favorites count
+    const favorites = localStorage.getItem('plateme_favorites');
+    const favCount = favorites ? JSON.parse(favorites).length : 0;
+
+    // Get completed checklist items
+    const checklist = localStorage.getItem('plateme_checklist');
+    const completedCount = checklist 
+      ? JSON.parse(checklist).filter(item => item.checked).length 
+      : 1;
+
+    setStats({
+      favorites: favCount,
+      completed: completedCount,
+      totalCards: 19
+    });
+  }, []);
+
+  return (
+    <div className="bg-gradient-to-br from-primary/10 to-surface-dark border border-primary/20 rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <span className="material-symbols-outlined text-primary">insights</span>
+        <h3 className="text-white text-lg font-bold">Your Progress</h3>
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="text-center">
+          <div className="text-3xl font-black text-primary">{stats.favorites}</div>
+          <div className="text-xs text-slate-400 mt-1">Favorites</div>
+        </div>
+        <div className="text-center">
+          <div className="text-3xl font-black text-primary">{stats.completed}/4</div>
+          <div className="text-xs text-slate-400 mt-1">Tasks Done</div>
+        </div>
+        <div className="text-center">
+          <div className="text-3xl font-black text-primary">{stats.totalCards}</div>
+          <div className="text-xs text-slate-400 mt-1">Techniques</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Daily Garnish Tip Widget
 export const DailyTip = () => {
   const handleReadGuide = (e) => {
