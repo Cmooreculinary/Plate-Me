@@ -462,8 +462,8 @@ export const Hero = () => {
   );
 };
 
-// Filter Bar
-export const FilterBar = ({ activeFilter, onFilterChange }) => {
+// Filter Bar with Skill Level and Sort
+export const FilterBar = ({ activeFilter, onFilterChange, activeSkillLevel, onSkillLevelChange, sortBy, onSortChange }) => {
   const filters = [
     { id: "all", label: "All Styles", icon: "apps" },
     { id: "fine", label: "Fine Dining", icon: "room_service" },
@@ -472,22 +472,61 @@ export const FilterBar = ({ activeFilter, onFilterChange }) => {
     { id: "vegan", label: "Vegan", icon: "eco" }
   ];
 
+  const skillLevels = ["All Levels", "Beginner", "Intermediate", "Advanced", "Expert"];
+  const sortOptions = [
+    { value: "popular", label: "Most Popular" },
+    { value: "newest", label: "Newest First" },
+    { value: "skill", label: "By Skill Level" }
+  ];
+
   return (
-    <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-      {filters.map((filter) => (
-        <button
-          key={filter.id}
-          onClick={() => onFilterChange(filter.id)}
-          className={`flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-5 transition-all ${
-            activeFilter === filter.id
-              ? "bg-primary text-background-dark shadow-lg shadow-primary/10"
-              : "bg-surface-dark hover:bg-slate-700 text-white"
-          }`}
-        >
-          <span className="material-symbols-outlined text-[20px]">{filter.icon}</span>
-          <p className="text-sm font-medium">{filter.label}</p>
-        </button>
-      ))}
+    <div className="flex flex-col gap-4">
+      {/* Style Filters */}
+      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+        {filters.map((filter) => (
+          <button
+            key={filter.id}
+            onClick={() => onFilterChange(filter.id)}
+            className={`flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-5 transition-all ${
+              activeFilter === filter.id
+                ? "bg-primary text-background-dark shadow-lg shadow-primary/10"
+                : "bg-surface-dark hover:bg-slate-700 text-white"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[20px]">{filter.icon}</span>
+            <p className="text-sm font-medium">{filter.label}</p>
+          </button>
+        ))}
+      </div>
+
+      {/* Skill Level & Sort Controls */}
+      <div className="flex flex-wrap gap-3 items-center">
+        <div className="flex items-center gap-2">
+          <span className="text-slate-400 text-sm">Skill:</span>
+          <select
+            value={activeSkillLevel}
+            onChange={(e) => onSkillLevelChange(e.target.value)}
+            className="bg-surface-dark text-white text-sm rounded-lg px-3 py-2 border border-slate-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          >
+            {skillLevels.map((level) => (
+              <option key={level} value={level}>{level}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-slate-400 text-sm">Sort:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => onSortChange(e.target.value)}
+            className="bg-surface-dark text-white text-sm rounded-lg px-3 py-2 border border-slate-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          >
+            {sortOptions.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
 };
