@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Image registry for the food plating dashboard
 export const IMAGES = {
@@ -19,38 +19,131 @@ export const IMAGES = {
   profile: "https://lh3.googleusercontent.com/aida-public/AB6AXuBEYochnh9haSoonsm7CULSMtb5qi_kBShgg4cqTNSuju6ZDUlsTm2slSYYIhHkj9b6tYk8lL39A0gx2h_MgS0_z8P5HLhUNceVumd3wNWlclSn88dbLPBecP0OopvjozR4zI3D70hRaDyeh5mx7y_G2HbKcERvenh50nX7gOIXnwA10Qy8_Y_VQXBWPbwcF5OnTwub5wI4X6i3DPr_J74x9swnNsrBoiYvJdZn_bQZH_elubqnWIrUUE7gfMgqomDDkBERZ3W08jJs"
 };
 
-// Header Component
-export const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
+// All inspiration cards data
+const ALL_CARDS = [
+  {
+    id: 1,
+    image: IMAGES.card1,
+    title: "Molecular Gastronomy",
+    level: "Advanced",
+    category: "fine",
+    description: "Exploring textures with foams and spherification.",
+    views: "2.4k",
+    aspectRatio: "4/5"
+  },
+  {
+    id: 2,
+    image: IMAGES.card2,
+    title: "Minimalist Scallop",
+    level: "Intermediate",
+    category: "fine",
+    description: "Focus on negative space and clean lines.",
+    views: "850",
+    aspectRatio: "1/1"
+  },
+  {
+    id: 3,
+    image: IMAGES.card3,
+    title: "Rustic Presentation",
+    level: "Beginner",
+    category: "buffet",
+    description: "Authentic farm-to-table aesthetic.",
+    views: "1.2k",
+    aspectRatio: "3/4"
+  },
+  {
+    id: 4,
+    image: IMAGES.card4,
+    title: "Nordic Influence",
+    level: "Expert",
+    category: "vegan",
+    description: "Using foraged ingredients and natural elements.",
+    views: "3.1k",
+    aspectRatio: "16/9"
+  }
+];
 
-  React.useEffect(() => {
+// Smooth scroll utility
+const smoothScrollTo = (elementId) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+// Header Component
+export const Header = ({ onSearch, currentSection }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    if (onSearch) {
+      onSearch(query);
+    }
+  };
+
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    smoothScrollTo(sectionId);
+  };
 
   return (
     <header className={`flex items-center justify-between whitespace-nowrap border-b border-solid ${
       scrolled ? "border-slate-700" : "border-surface-dark"
     } bg-background-dark px-10 py-3 sticky top-0 z-50 transition-all`}>
       <div className="flex items-center gap-8">
-        <div className="flex items-center gap-4 text-white">
+        <button 
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center gap-4 text-white hover:opacity-80 transition-opacity"
+        >
           <div className="size-6 text-primary">
             <span className="material-symbols-outlined text-3xl">restaurant_menu</span>
           </div>
           <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Plate Me</h2>
-        </div>
+        </button>
         <nav className="hidden md:flex items-center gap-9">
-          <a className="text-white text-sm font-bold leading-normal border-b-2 border-primary" href="#dashboard">
+          <a 
+            className={`text-sm font-medium leading-normal hover:text-primary transition-colors ${
+              currentSection === 'dashboard' ? 'text-white font-bold border-b-2 border-primary' : 'text-slate-400'
+            }`}
+            href="#dashboard"
+            onClick={(e) => handleNavClick(e, 'dashboard')}
+          >
             Dashboard
           </a>
-          <a className="text-slate-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#builder">
+          <a 
+            className={`text-sm font-medium leading-normal hover:text-primary transition-colors ${
+              currentSection === 'builder' ? 'text-white font-bold border-b-2 border-primary' : 'text-slate-400'
+            }`}
+            href="#builder"
+            onClick={(e) => handleNavClick(e, 'builder')}
+          >
             Plate Builder
           </a>
-          <a className="text-slate-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#techniques">
+          <a 
+            className={`text-sm font-medium leading-normal hover:text-primary transition-colors ${
+              currentSection === 'techniques' ? 'text-white font-bold border-b-2 border-primary' : 'text-slate-400'
+            }`}
+            href="#techniques"
+            onClick={(e) => handleNavClick(e, 'techniques')}
+          >
             Techniques
           </a>
-          <a className="text-slate-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#station">
+          <a 
+            className={`text-sm font-medium leading-normal hover:text-primary transition-colors ${
+              currentSection === 'station' ? 'text-white font-bold border-b-2 border-primary' : 'text-slate-400'
+            }`}
+            href="#station"
+            onClick={(e) => handleNavClick(e, 'station')}
+          >
             Station Setup
           </a>
         </nav>
@@ -64,6 +157,8 @@ export const Header = () => {
             <input
               className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-white focus:outline-0 focus:ring-0 border-none h-full placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
               placeholder="Search plates..."
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </div>
         </label>
@@ -71,6 +166,7 @@ export const Header = () => {
           className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/50 hover:ring-primary transition-all"
           style={{ backgroundImage: `url(${IMAGES.profile})` }}
           aria-label="Chef profile"
+          onClick={() => alert('Profile menu coming soon!')}
         />
       </div>
     </header>
@@ -79,8 +175,12 @@ export const Header = () => {
 
 // Hero Section
 export const Hero = () => {
+  const handleExploreClick = () => {
+    smoothScrollTo('techniques');
+  };
+
   return (
-    <div className="rounded-xl overflow-hidden relative">
+    <div id="dashboard" className="rounded-xl overflow-hidden relative">
       <div
         className="flex min-h-[320px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-8 relative group"
         style={{ backgroundImage: `url(${IMAGES.hero_bg})` }}
@@ -94,7 +194,10 @@ export const Hero = () => {
             Discover the art of presentation with daily inspiration and techniques from Michelin-starred chefs.
           </p>
         </div>
-        <button className="z-10 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-white hover:text-black transition-colors shadow-lg shadow-primary/20">
+        <button 
+          onClick={handleExploreClick}
+          className="z-10 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-white hover:text-black transition-colors shadow-lg shadow-primary/20"
+        >
           Explore Techniques
         </button>
       </div>
@@ -103,9 +206,7 @@ export const Hero = () => {
 };
 
 // Filter Bar
-export const FilterBar = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
-
+export const FilterBar = ({ activeFilter, onFilterChange }) => {
   const filters = [
     { id: "all", label: "All Styles", icon: "apps" },
     { id: "fine", label: "Fine Dining", icon: "room_service" },
@@ -119,7 +220,7 @@ export const FilterBar = () => {
       {filters.map((filter) => (
         <button
           key={filter.id}
-          onClick={() => setActiveFilter(filter.id)}
+          onClick={() => onFilterChange(filter.id)}
           className={`flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-5 transition-all ${
             activeFilter === filter.id
               ? "bg-primary text-background-dark shadow-lg shadow-primary/10"
@@ -135,7 +236,7 @@ export const FilterBar = () => {
 };
 
 // Inspiration Card
-const InspirationCard = ({ image, title, level, description, views, aspectRatio = "4/5" }) => {
+const InspirationCard = ({ card, isFavorited, onToggleFavorite }) => {
   const levelColors = {
     Advanced: "bg-primary/20 text-primary",
     Intermediate: "bg-blue-500/20 text-blue-400",
@@ -145,26 +246,32 @@ const InspirationCard = ({ image, title, level, description, views, aspectRatio 
 
   return (
     <div className="break-inside-avoid rounded-xl bg-surface-dark border border-slate-800 overflow-hidden group hover:border-primary/50 transition-colors">
-      <div className="relative w-full overflow-hidden" style={{ aspectRatio }}>
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: card.aspectRatio }}>
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-          style={{ backgroundImage: `url(${image})` }}
+          style={{ backgroundImage: `url(${card.image})` }}
         />
-        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full p-2 text-white hover:text-primary cursor-pointer transition-colors">
-          <span className="material-symbols-outlined text-[20px] block">favorite</span>
-        </div>
+        <button
+          onClick={() => onToggleFavorite(card.id)}
+          className="absolute top-3 right-3 bg-black/60 backdrop-blur-md rounded-full p-2 text-white hover:text-primary cursor-pointer transition-colors"
+          aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+        >
+          <span className={`material-symbols-outlined text-[20px] block ${isFavorited ? 'fill-current' : ''}`}>
+            {isFavorited ? 'favorite' : 'favorite_border'}
+          </span>
+        </button>
       </div>
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-white text-lg font-bold">{title}</h3>
-          <span className={`text-xs font-semibold px-2 py-1 rounded ${levelColors[level]}`}>
-            {level}
+          <h3 className="text-white text-lg font-bold">{card.title}</h3>
+          <span className={`text-xs font-semibold px-2 py-1 rounded ${levelColors[card.level]}`}>
+            {card.level}
           </span>
         </div>
-        <p className="text-slate-400 text-sm mb-3">{description}</p>
+        <p className="text-slate-400 text-sm mb-3">{card.description}</p>
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <span className="material-symbols-outlined text-[16px]">visibility</span>
-          <span>{views} views</span>
+          <span>{card.views} views</span>
         </div>
       </div>
     </div>
@@ -172,53 +279,59 @@ const InspirationCard = ({ image, title, level, description, views, aspectRatio 
 };
 
 // Masonry Grid
-export const MasonryGrid = () => {
-  const cards = [
-    {
-      image: IMAGES.card1,
-      title: "Molecular Gastronomy",
-      level: "Advanced",
-      description: "Exploring textures with foams and spherification.",
-      views: "2.4k",
-      aspectRatio: "4/5"
-    },
-    {
-      image: IMAGES.card2,
-      title: "Minimalist Scallop",
-      level: "Intermediate",
-      description: "Focus on negative space and clean lines.",
-      views: "850",
-      aspectRatio: "1/1"
-    },
-    {
-      image: IMAGES.card3,
-      title: "Rustic Presentation",
-      level: "Beginner",
-      description: "Authentic farm-to-table aesthetic.",
-      views: "1.2k",
-      aspectRatio: "3/4"
-    },
-    {
-      image: IMAGES.card4,
-      title: "Nordic Influence",
-      level: "Expert",
-      description: "Using foraged ingredients and natural elements.",
-      views: "3.1k",
-      aspectRatio: "16/9"
-    }
-  ];
+export const MasonryGrid = ({ activeFilter, searchQuery }) => {
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('plateme_favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const toggleFavorite = (cardId) => {
+    setFavorites(prev => {
+      const newFavorites = prev.includes(cardId)
+        ? prev.filter(id => id !== cardId)
+        : [...prev, cardId];
+      localStorage.setItem('plateme_favorites', JSON.stringify(newFavorites));
+      return newFavorites;
+    });
+  };
+
+  // Filter cards based on active filter and search query
+  const filteredCards = ALL_CARDS.filter(card => {
+    const matchesFilter = activeFilter === 'all' || card.category === activeFilter;
+    const matchesSearch = !searchQuery || 
+      card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      card.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="columns-1 md:columns-2 gap-6 space-y-6">
-      {cards.map((card, idx) => (
-        <InspirationCard key={idx} {...card} />
-      ))}
+      {filteredCards.length > 0 ? (
+        filteredCards.map((card) => (
+          <InspirationCard 
+            key={card.id} 
+            card={card}
+            isFavorited={favorites.includes(card.id)}
+            onToggleFavorite={toggleFavorite}
+          />
+        ))
+      ) : (
+        <div className="col-span-full text-center py-12">
+          <p className="text-slate-400 text-lg">No plates found matching your criteria.</p>
+          <p className="text-slate-500 text-sm mt-2">Try adjusting your filters or search query.</p>
+        </div>
+      )}
     </div>
   );
 };
 
 // Daily Garnish Tip Widget
 export const DailyTip = () => {
+  const handleReadGuide = (e) => {
+    e.preventDefault();
+    alert('Full garnish guide coming soon! This will open a detailed tutorial on micro-herb placement techniques.');
+  };
+
   return (
     <div className="bg-surface-dark border border-slate-800 rounded-xl p-6 relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-10">
@@ -233,7 +346,11 @@ export const DailyTip = () => {
         <p className="text-slate-400 text-sm leading-relaxed mb-4">
           Instead of scattering, try clustering your micro-herbs in odd numbers (3 or 5) to create focal points on the plate.
         </p>
-        <a className="inline-flex items-center text-primary text-sm font-bold hover:underline" href="#guide">
+        <a 
+          className="inline-flex items-center text-primary text-sm font-bold hover:underline cursor-pointer" 
+          href="#guide"
+          onClick={handleReadGuide}
+        >
           Read full guide <span className="material-symbols-outlined text-sm ml-1">arrow_forward</span>
         </a>
       </div>
@@ -245,33 +362,55 @@ export const DailyTip = () => {
 export const NewTechniques = () => {
   const techniques = [
     {
+      id: 1,
       image: IMAGES.tech1,
       title: "Tweezer Precision",
       description: "Mastering the art of delicate placement."
     },
     {
+      id: 2,
       image: IMAGES.tech2,
       title: "Squeeze Bottle Art",
       description: "Create perfect dots, swooshes, and lines."
     },
     {
+      id: 3,
       image: IMAGES.tech3,
       title: "Smoke Infusion",
       description: "Adding drama and flavor with smoke guns."
     }
   ];
 
+  const handleViewAll = (e) => {
+    e.preventDefault();
+    smoothScrollTo('techniques');
+  };
+
+  const handleTechniqueClick = (e, technique) => {
+    e.preventDefault();
+    alert(`${technique.title} tutorial coming soon! This will open a detailed video and step-by-step guide.`);
+  };
+
   return (
-    <div className="bg-surface-dark border border-slate-800 rounded-xl p-6">
+    <div id="techniques" className="bg-surface-dark border border-slate-800 rounded-xl p-6">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-white text-lg font-bold">New Techniques</h3>
-        <a className="text-xs text-slate-400 hover:text-white" href="#all">
+        <a 
+          className="text-xs text-slate-400 hover:text-white cursor-pointer" 
+          href="#all"
+          onClick={handleViewAll}
+        >
           View All
         </a>
       </div>
       <div className="flex flex-col gap-4">
-        {techniques.map((tech, idx) => (
-          <a key={idx} className="flex gap-4 items-center group" href="#technique">
+        {techniques.map((tech) => (
+          <a 
+            key={tech.id} 
+            className="flex gap-4 items-center group cursor-pointer" 
+            href="#technique"
+            onClick={(e) => handleTechniqueClick(e, tech)}
+          >
             <div
               className="size-14 rounded-lg bg-cover bg-center shrink-0 border border-slate-700 group-hover:border-primary transition-colors"
               style={{ backgroundImage: `url(${tech.image})` }}
@@ -291,21 +430,32 @@ export const NewTechniques = () => {
 
 // Mise en Place Checklist
 export const MiseEnPlace = () => {
-  const [checklist, setChecklist] = useState([
-    { id: 1, label: "Sharpen Knives", checked: true },
-    { id: 2, label: "Prep Micro-greens", checked: false },
-    { id: 3, label: "Fill Squeeze Bottles", checked: false },
-    { id: 4, label: "Clean Rim Cloths", checked: false }
-  ]);
+  const [checklist, setChecklist] = useState(() => {
+    const saved = localStorage.getItem('plateme_checklist');
+    return saved ? JSON.parse(saved) : [
+      { id: 1, label: "Sharpen Knives", checked: true },
+      { id: 2, label: "Prep Micro-greens", checked: false },
+      { id: 3, label: "Fill Squeeze Bottles", checked: false },
+      { id: 4, label: "Clean Rim Cloths", checked: false }
+    ];
+  });
 
   const toggleCheck = (id) => {
-    setChecklist(checklist.map(item => 
-      item.id === id ? { ...item, checked: !item.checked } : item
-    ));
+    setChecklist(prev => {
+      const updated = prev.map(item => 
+        item.id === id ? { ...item, checked: !item.checked } : item
+      );
+      localStorage.setItem('plateme_checklist', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleViewFullSetup = () => {
+    smoothScrollTo('station');
   };
 
   return (
-    <div className="bg-gradient-to-br from-surface-dark to-black border border-slate-800 rounded-xl p-6 text-white">
+    <div id="station" className="bg-gradient-to-br from-surface-dark to-black border border-slate-800 rounded-xl p-6 text-white">
       <div className="flex items-center gap-3 mb-4">
         <span className="material-symbols-outlined text-primary">checklist</span>
         <h3 className="text-lg font-bold">Mise en Place</h3>
@@ -317,7 +467,7 @@ export const MiseEnPlace = () => {
               type="checkbox"
               checked={item.checked}
               onChange={() => toggleCheck(item.id)}
-              className="form-checkbox rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary focus:ring-offset-0"
+              className="form-checkbox rounded bg-slate-800 border-slate-600 text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
             />
             <span className={`group-hover:text-white transition-colors ${item.checked ? 'line-through opacity-50' : ''}`}>
               {item.label}
@@ -325,27 +475,63 @@ export const MiseEnPlace = () => {
           </label>
         ))}
       </div>
-      <button className="w-full mt-6 py-2 rounded border border-slate-600 hover:border-primary hover:text-primary text-xs font-bold uppercase tracking-wider transition-colors">
+      <button 
+        onClick={handleViewFullSetup}
+        className="w-full mt-6 py-2 rounded border border-slate-600 hover:border-primary hover:text-primary text-xs font-bold uppercase tracking-wider transition-colors"
+      >
         View Full Setup
       </button>
     </div>
   );
 };
 
+// Placeholder sections for navigation
+export const PlateBuilder = () => (
+  <div id="builder" className="min-h-screen flex items-center justify-center">
+    <div className="text-center max-w-2xl mx-auto p-8">
+      <span className="material-symbols-outlined text-primary text-6xl mb-4 block">restaurant</span>
+      <h2 className="text-white text-3xl font-bold mb-4">Plate Builder Tool</h2>
+      <p className="text-slate-400 text-lg mb-6">
+        Design your perfect plate with our interactive builder. Drag and drop ingredients, adjust portions, and visualize your creation.
+      </p>
+      <button className="bg-primary text-background-dark px-6 py-3 rounded-lg font-bold hover:bg-white transition-colors">
+        Coming Soon
+      </button>
+    </div>
+  </div>
+);
+
 // Footer
 export const Footer = () => {
+  const handleFooterLink = (e, linkName) => {
+    e.preventDefault();
+    alert(`${linkName} page coming soon!`);
+  };
+
   return (
     <footer className="border-t border-surface-dark py-8 px-10 mt-auto bg-background-dark">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-slate-400 text-sm">© 2023 Plate Me. All rights reserved.</p>
         <div className="flex gap-6">
-          <a className="text-slate-400 text-sm hover:text-primary" href="#privacy">
+          <a 
+            className="text-slate-400 text-sm hover:text-primary cursor-pointer" 
+            href="#privacy"
+            onClick={(e) => handleFooterLink(e, 'Privacy Policy')}
+          >
             Privacy Policy
           </a>
-          <a className="text-slate-400 text-sm hover:text-primary" href="#terms">
+          <a 
+            className="text-slate-400 text-sm hover:text-primary cursor-pointer" 
+            href="#terms"
+            onClick={(e) => handleFooterLink(e, 'Terms of Service')}
+          >
             Terms of Service
           </a>
-          <a className="text-slate-400 text-sm hover:text-primary" href="#support">
+          <a 
+            className="text-slate-400 text-sm hover:text-primary cursor-pointer" 
+            href="#support"
+            onClick={(e) => handleFooterLink(e, 'Support')}
+          >
             Support
           </a>
         </div>
