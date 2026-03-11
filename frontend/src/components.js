@@ -52,6 +52,7 @@ export const IMAGES = {
 
 // All inspiration cards data
 const ALL_CARDS = [
+  // Original cards
   {
     id: 1,
     image: IMAGES.card1,
@@ -91,6 +92,164 @@ const ALL_CARDS = [
     description: "Using foraged ingredients and natural elements.",
     views: "3.1k",
     aspectRatio: "16/9"
+  },
+  // Fine Dining
+  {
+    id: 5,
+    image: IMAGES.fine1,
+    title: "Scallop Crudo",
+    level: "Expert",
+    category: "fine",
+    description: "Delicate raw scallop with citrus and microgreens.",
+    views: "4.2k",
+    aspectRatio: "1/1"
+  },
+  {
+    id: 6,
+    image: IMAGES.fine2,
+    title: "Gourmet Shrimp",
+    level: "Advanced",
+    category: "fine",
+    description: "Sophisticated shrimp appetizer with artistic plating.",
+    views: "3.8k",
+    aspectRatio: "4/3"
+  },
+  // Buffet
+  {
+    id: 7,
+    image: IMAGES.buffet1,
+    title: "Buffet Spread",
+    level: "Intermediate",
+    category: "buffet",
+    description: "Professional buffet display with variety.",
+    views: "5.1k",
+    aspectRatio: "16/9"
+  },
+  {
+    id: 8,
+    image: IMAGES.buffet2,
+    title: "Market Display",
+    level: "Beginner",
+    category: "buffet",
+    description: "Organized food presentation for catering.",
+    views: "2.9k",
+    aspectRatio: "4/3"
+  },
+  // Street Food
+  {
+    id: 9,
+    image: IMAGES.street1,
+    title: "Street Tacos",
+    level: "Beginner",
+    category: "street",
+    description: "Vibrant tacos with fresh garnishes and lime.",
+    views: "6.7k",
+    aspectRatio: "1/1"
+  },
+  {
+    id: 10,
+    image: IMAGES.street2,
+    title: "Colorful Fish Plate",
+    level: "Intermediate",
+    category: "street",
+    description: "Street-style fish with artistic vegetable arrangement.",
+    views: "4.5k",
+    aspectRatio: "4/5"
+  },
+  // Vegan
+  {
+    id: 11,
+    image: IMAGES.vegan1,
+    title: "Plant-Based Bowl",
+    level: "Intermediate",
+    category: "vegan",
+    description: "Colorful vegan bowl with seasonal vegetables.",
+    views: "5.3k",
+    aspectRatio: "1/1"
+  },
+  // Molecular Gastronomy
+  {
+    id: 12,
+    image: IMAGES.molecular1,
+    title: "Strawberry Spheres",
+    level: "Expert",
+    category: "fine",
+    description: "Modern molecular technique with fruit spherification.",
+    views: "7.2k",
+    aspectRatio: "3/4"
+  },
+  {
+    id: 13,
+    image: IMAGES.molecular2,
+    title: "Foam & Gel",
+    level: "Advanced",
+    category: "fine",
+    description: "Innovative textures using molecular gastronomy.",
+    views: "6.1k",
+    aspectRatio: "4/5"
+  },
+  // Rustic
+  {
+    id: 14,
+    image: IMAGES.rustic1,
+    title: "Roasted Vegetables",
+    level: "Beginner",
+    category: "buffet",
+    description: "Simple rustic presentation with roasted carrots.",
+    views: "3.4k",
+    aspectRatio: "4/3"
+  },
+  {
+    id: 15,
+    image: IMAGES.rustic2,
+    title: "Artisan Bread",
+    level: "Beginner",
+    category: "buffet",
+    description: "Rustic bread presentation on wooden board.",
+    views: "2.8k",
+    aspectRatio: "16/9"
+  },
+  // Minimalist
+  {
+    id: 16,
+    image: IMAGES.minimal1,
+    title: "Clean Lines",
+    level: "Advanced",
+    category: "fine",
+    description: "Minimalist plating with precise vegetable arrangement.",
+    views: "4.9k",
+    aspectRatio: "1/1"
+  },
+  {
+    id: 17,
+    image: IMAGES.minimal2,
+    title: "White Space",
+    level: "Intermediate",
+    category: "fine",
+    description: "Elegant minimalist composition with negative space.",
+    views: "3.7k",
+    aspectRatio: "4/5"
+  },
+  // Desserts
+  {
+    id: 18,
+    image: IMAGES.dessert1,
+    title: "Chocolate Elegance",
+    level: "Expert",
+    category: "fine",
+    description: "Gourmet chocolate dessert with berries and gold leaf.",
+    views: "8.1k",
+    aspectRatio: "3/4"
+  },
+  {
+    id: 19,
+    image: IMAGES.dessert2,
+    title: "Pastry Art",
+    level: "Advanced",
+    category: "fine",
+    description: "Delicate pastry with green topping and edible flowers.",
+    views: "5.6k",
+    aspectRatio: "1/1"
   }
 ];
 
