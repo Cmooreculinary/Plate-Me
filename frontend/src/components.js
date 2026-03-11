@@ -575,11 +575,17 @@ const InspirationCard = ({ card, isFavorited, onToggleFavorite }) => {
 };
 
 // Masonry Grid
-export const MasonryGrid = ({ activeFilter, searchQuery, activeSkillLevel, sortBy }) => {
+export const MasonryGrid = ({ activeFilter, searchQuery, activeSkillLevel, sortBy, onFavoritesChange }) => {
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('plateme_favorites');
     return saved ? JSON.parse(saved) : [];
   });
+
+  useEffect(() => {
+    if (onFavoritesChange) {
+      onFavoritesChange(favorites.length);
+    }
+  }, [favorites, onFavoritesChange]);
 
   const toggleFavorite = (cardId) => {
     setFavorites(prev => {
