@@ -6,10 +6,12 @@ import {
   Hero, 
   FilterBar, 
   MasonryGrid, 
+  QuickStats,
+  TrendingWeek,
   DailyTip, 
   NewTechniques, 
   MiseEnPlace, 
-  PlateBuilder,
+  MobileMenu,
   Footer 
 } from "./components";
 
@@ -17,6 +19,9 @@ function Dashboard() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentSection, setCurrentSection] = useState("dashboard");
+  const [activeSkillLevel, setActiveSkillLevel] = useState("All Levels");
+  const [sortBy, setSortBy] = useState("popular");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Track current section based on scroll position
   useEffect(() => {
@@ -48,10 +53,24 @@ function Dashboard() {
     setSearchQuery(query);
   };
 
+  const handleSkillLevelChange = (level) => {
+    setActiveSkillLevel(level);
+  };
+
+  const handleSortChange = (sort) => {
+    setSortBy(sort);
+  };
+
   return (
     <div className="min-h-screen bg-background-dark text-white font-body antialiased">
       <Header 
         onSearch={handleSearch} 
+        currentSection={currentSection}
+        onMenuToggle={() => setMobileMenuOpen(true)}
+      />
+      <MobileMenu 
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
         currentSection={currentSection}
       />
       <main className="flex-1 w-full max-w-[1440px] mx-auto p-6 md:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -61,15 +80,23 @@ function Dashboard() {
           <FilterBar 
             activeFilter={activeFilter}
             onFilterChange={handleFilterChange}
+            activeSkillLevel={activeSkillLevel}
+            onSkillLevelChange={handleSkillLevelChange}
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
           />
           <MasonryGrid 
             activeFilter={activeFilter}
             searchQuery={searchQuery}
+            activeSkillLevel={activeSkillLevel}
+            sortBy={sortBy}
           />
         </div>
         
         {/* Right Column: Sidebar */}
         <div className="lg:col-span-4 flex flex-col gap-8">
+          <QuickStats />
+          <TrendingWeek />
           <DailyTip />
           <NewTechniques />
           <MiseEnPlace />
