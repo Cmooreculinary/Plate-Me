@@ -322,7 +322,7 @@ export const MobileMenu = ({ isOpen, onClose, currentSection }) => {
 };
 
 // Header Component
-export const Header = ({ onSearch, currentSection }) => {
+export const Header = ({ onSearch, currentSection, onMenuToggle }) => {
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -348,8 +348,8 @@ export const Header = ({ onSearch, currentSection }) => {
   return (
     <header className={`flex items-center justify-between whitespace-nowrap border-b border-solid ${
       scrolled ? "border-slate-700" : "border-surface-dark"
-    } bg-background-dark px-10 py-3 sticky top-0 z-50 transition-all`}>
-      <div className="flex items-center gap-8">
+    } bg-background-dark px-6 md:px-10 py-3 sticky top-0 z-50 transition-all`}>
+      <div className="flex items-center gap-4 md:gap-8">
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-4 text-white hover:opacity-80 transition-opacity"
@@ -398,7 +398,7 @@ export const Header = ({ onSearch, currentSection }) => {
           </a>
         </nav>
       </div>
-      <div className="flex flex-1 justify-end gap-8">
+      <div className="flex flex-1 justify-end gap-4 md:gap-8">
         <label className="flex flex-col min-w-40 h-10 max-w-64 hidden sm:flex">
           <div className="flex w-full flex-1 items-stretch rounded-lg h-full bg-surface-dark group focus-within:ring-2 focus-within:ring-primary">
             <div className="text-slate-400 flex border-none items-center justify-center pl-4 rounded-l-lg border-r-0">
@@ -418,6 +418,13 @@ export const Header = ({ onSearch, currentSection }) => {
           aria-label="Chef profile"
           onClick={() => alert('Profile menu coming soon!')}
         />
+        <button
+          onClick={onMenuToggle}
+          className="md:hidden text-white hover:text-primary transition-colors"
+          aria-label="Menu"
+        >
+          <span className="material-symbols-outlined text-3xl">menu</span>
+        </button>
       </div>
     </header>
   );
