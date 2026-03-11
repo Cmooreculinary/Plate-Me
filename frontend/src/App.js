@@ -22,6 +22,21 @@ function Dashboard() {
   const [activeSkillLevel, setActiveSkillLevel] = useState("All Levels");
   const [sortBy, setSortBy] = useState("popular");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [favoritesCount, setFavoritesCount] = useState(0);
+  const [completedCount, setCompletedCount] = useState(1);
+
+  // Initialize stats from localStorage
+  useEffect(() => {
+    const favorites = localStorage.getItem('plateme_favorites');
+    const favCount = favorites ? JSON.parse(favorites).length : 0;
+    setFavoritesCount(favCount);
+
+    const checklist = localStorage.getItem('plateme_checklist');
+    const completed = checklist 
+      ? JSON.parse(checklist).filter(item => item.checked).length 
+      : 1;
+    setCompletedCount(completed);
+  }, []);
 
   // Track current section based on scroll position
   useEffect(() => {
@@ -61,6 +76,14 @@ function Dashboard() {
     setSortBy(sort);
   };
 
+  const handleFavoritesChange = (count) => {
+    setFavoritesCount(count);
+  };
+
+  const handleChecklistChange = (count) => {
+    setCompletedCount(count);
+  };
+
   return (
     <div className="min-h-screen bg-background-dark text-white font-body antialiased">
       <Header 
@@ -90,16 +113,20 @@ function Dashboard() {
             searchQuery={searchQuery}
             activeSkillLevel={activeSkillLevel}
             sortBy={sortBy}
+            onFavoritesChange={handleFavoritesChange}
           />
         </div>
         
         {/* Right Column: Sidebar */}
         <div className="lg:col-span-4 flex flex-col gap-8">
-          <QuickStats />
+          <QuickStats 
+            favoritesCount={favoritesCount}
+            completedCount={completedCount}
+          />
           <TrendingWeek />
           <DailyTip />
           <NewTechniques />
-          <MiseEnPlace />
+          <MiseEnPlace onChecklistChange={handleChecklistChange} />
         </div>
       </main>
       <Footer />
