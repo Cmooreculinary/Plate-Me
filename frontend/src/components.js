@@ -805,7 +805,7 @@ export const NewTechniques = () => {
 };
 
 // Mise en Place Checklist
-export const MiseEnPlace = () => {
+export const MiseEnPlace = ({ onChecklistChange }) => {
   const [checklist, setChecklist] = useState(() => {
     const saved = localStorage.getItem('plateme_checklist');
     return saved ? JSON.parse(saved) : [
@@ -815,6 +815,13 @@ export const MiseEnPlace = () => {
       { id: 4, label: "Clean Rim Cloths", checked: false }
     ];
   });
+
+  useEffect(() => {
+    if (onChecklistChange) {
+      const completedCount = checklist.filter(item => item.checked).length;
+      onChecklistChange(completedCount);
+    }
+  }, [checklist, onChecklistChange]);
 
   const toggleCheck = (id) => {
     setChecklist(prev => {
