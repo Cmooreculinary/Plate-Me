@@ -261,6 +261,66 @@ const smoothScrollTo = (elementId) => {
   }
 };
 
+// Mobile Menu Component
+export const MobileMenu = ({ isOpen, onClose, currentSection }) => {
+  if (!isOpen) return null;
+
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    smoothScrollTo(sectionId);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 md:hidden">
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute right-0 top-0 bottom-0 w-64 bg-surface-dark border-l border-slate-700 p-6 animate-slide-in">
+        <button onClick={onClose} className="absolute top-4 right-4 text-white hover:text-primary">
+          <span className="material-symbols-outlined">close</span>
+        </button>
+        <nav className="flex flex-col gap-6 mt-12">
+          <a 
+            className={`text-base font-medium hover:text-primary transition-colors ${
+              currentSection === 'dashboard' ? 'text-primary font-bold' : 'text-white'
+            }`}
+            href="#dashboard"
+            onClick={(e) => handleNavClick(e, 'dashboard')}
+          >
+            Dashboard
+          </a>
+          <a 
+            className={`text-base font-medium hover:text-primary transition-colors ${
+              currentSection === 'builder' ? 'text-primary font-bold' : 'text-white'
+            }`}
+            href="#builder"
+            onClick={(e) => handleNavClick(e, 'builder')}
+          >
+            Plate Builder
+          </a>
+          <a 
+            className={`text-base font-medium hover:text-primary transition-colors ${
+              currentSection === 'techniques' ? 'text-primary font-bold' : 'text-white'
+            }`}
+            href="#techniques"
+            onClick={(e) => handleNavClick(e, 'techniques')}
+          >
+            Techniques
+          </a>
+          <a 
+            className={`text-base font-medium hover:text-primary transition-colors ${
+              currentSection === 'station' ? 'text-primary font-bold' : 'text-white'
+            }`}
+            href="#station"
+            onClick={(e) => handleNavClick(e, 'station')}
+          >
+            Station Setup
+          </a>
+        </nav>
+      </div>
+    </div>
+  );
+};
+
 // Header Component
 export const Header = ({ onSearch, currentSection }) => {
   const [scrolled, setScrolled] = useState(false);
