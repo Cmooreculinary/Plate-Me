@@ -4,11 +4,42 @@ import React, { useState, useEffect } from "react";
 export const IMAGES = {
   hero_bg: "https://lh3.googleusercontent.com/aida-public/AB6AXuC_Wykg7nV0bhhOghSW8s8M7oo7SS7IGMU5x_hibNtQb2I1DiAnti0C9qvkoIRtjQ8CK9OUkopfEZ7Ve4Ojm9VB78LKY8gifAilFInIat50PK5yn9y5m6iPDsyDCOwqvdwiWBgELsk8_1C6x9B11izqk86lT0AUzU7k6YlnQ2V6DWhHEsSZ6fPGAvazMmwXWBD3kQGW9LgaPY11EtHE52HvPimum5XD9piOeLZfmqfhHMLuw2CXKnHif7vuOXEai5VD3qYBDJXWZQ47",
   
-  // Inspiration cards
+  // Original inspiration cards
   card1: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFN7gkw9PRNNIS44Ja0o4L_eCGdv3kINv_uex6aSargrGBeG2soRK3p1uxyxC7Biaqj3ernfBFRalmNVNQJ9I3BE7DJrIrLrp-DI5oFCdWZQ26HjvsEjuOiwxqIdU7PxSdcmmKzk6a2lKv0Ie2TCMck7FINrgBrBpnIlIl6f9YcRoWy8eyAN5fj48_5WkQb_Hs-uswJ-vKJDbp1PABK9c8yENI6wJTfirtii0GKDJK2uf-o5I47dzEGKA5fhawIeWGndG5NWNwkvHa",
   card2: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUOnqDAt11UHMtxxfbZVgJ6Z6ApSsBLQiHkjlokgo8aWLskugtBnqD1iTVCLhnc4PYKEyQF6oWdZ7gS0FBiKzm_XQa2fV2ut2TTy5KeJuLkgkBbh6SdYGbgNdnPecnjlM3vDc0TM1o-qrSkYTq28UweEsL-fMBMz4VWEKb8Qc-tre1DzBXuuxxvwtsQfgHJ33mo9w6Q-lkKEHAaouieJv-oENNCdlOIZ-B153KBBXkevBaVNM_s1ed5CzE4qnKeLkibJZoPXJK2Ur0",
   card3: "https://lh3.googleusercontent.com/aida-public/AB6AXuAAVdj7JOsZ33amRj7jeRgKAFp8L4GZhWcN5FoKiFUJkKbm4OstWXPM0CqHCRhPpbuUqwkR65wJ3padeC-thmmUXwOx50Nb-VIQ2rHBMoqXKd6TomrdkrOQ1eY2j7jum35oZjw5N3Azmi-qwu7Ms-M8Uk3vDuPx7tH2NbUteU5XbiAEqWNQ6yu31x0Dc7gQG8D1DrTy6_JJGZaodrFZfqOcSEWgaH0hWWY5ZbVlnFZX0J35xFtsGRF2NO84r2n4gbYeFqbDEl8vrxxA",
   card4: "https://lh3.googleusercontent.com/aida-public/AB6AXuCQnoL3HCPY8zBFm-yjhsm1frdyXx_jK0HN0bswjlGIuOsvmUU32EpyO_bk09buUhfRL-jPbTMId2GZGishLO3bapAdZoH2jIyuP2sM2bf4BmxX4qmKDB1gAem15HVSYJN5BH0pbMh30XTDwFIi1_30CroKTeTEIuJ6un8UfSCeV0rjegPrihYVy1V0IpeL3robIkBz3-wWByAJIEHJuIHMi097taIwpaNBp2EByTQnRG1YDmZxIPkZ4FHJA32I0u07HrYYhkEd4UKl",
+  
+  // Fine Dining
+  fine1: "https://images.unsplash.com/photo-1698434939525-dd584e446a29?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwxfHxmaW5lJTIwZGluaW5nJTIwcGxhdGluZ3xlbnwwfHx8fDE3NzMyNjQzMzJ8MA&ixlib=rb-4.1.0&q=85",
+  fine2: "https://images.unsplash.com/photo-1761095596757-db038313df59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwyfHxmaW5lJTIwZGluaW5nJTIwcGxhdGluZ3xlbnwwfHx8fDE3NzMyNjQzMzJ8MA&ixlib=rb-4.1.0&q=85",
+  
+  // Buffet
+  buffet1: "https://images.unsplash.com/photo-1769638913569-40fc740b44f5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxidWZmZXQlMjBmb29kJTIwZGlzcGxheXxlbnwwfHx8fDE3NzMyNjQzMzh8MA&ixlib=rb-4.1.0&q=85",
+  buffet2: "https://images.unsplash.com/photo-1770385802383-ef02bd943338?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxidWZmZXQlMjBmb29kJTIwZGlzcGxheXxlbnwwfHx8fDE3NzMyNjQzMzh8MA&ixlib=rb-4.1.0&q=85",
+  
+  // Street Food
+  street1: "https://images.unsplash.com/photo-1648437595587-e6a8b0cdf1f9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjBmb29kJTIwcGxhdGluZ3xlbnwwfHx8fDE3NzMyNjQzNDd8MA&ixlib=rb-4.1.0&q=85",
+  street2: "https://images.unsplash.com/photo-1560717845-968823efbee1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxzdHJlZXQlMjBmb29kJTIwcGxhdGluZ3xlbnwwfHx8fDE3NzMyNjQzNDd8MA&ixlib=rb-4.1.0&q=85",
+  
+  // Vegan
+  vegan1: "https://images.unsplash.com/photo-1673912401829-6495e87f3b9e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHx2ZWdhbiUyMHBsYXRpbmd8ZW58MHx8fHwxNzczMjY0MzUyfDA&ixlib=rb-4.1.0&q=85",
+  
+  // Molecular Gastronomy
+  molecular1: "https://images.unsplash.com/photo-1598214928052-185e72192688?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxtb2xlY3VsYXIlMjBnYXN0cm9ub215fGVufDB8fHx8MTc3MzI2NDM1OXww&ixlib=rb-4.1.0&q=85",
+  molecular2: "https://images.unsplash.com/photo-1710261924580-e513dba07a6c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwyfHxtb2xlY3VsYXIlMjBnYXN0cm9ub215fGVufDB8fHx8MTc3MzI2NDM1OXww&ixlib=rb-4.1.0&q=85",
+  
+  // Rustic
+  rustic1: "https://images.unsplash.com/photo-1763297104069-41bf64564c86?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjBmb29kJTIwcHJlc2VudGF0aW9ufGVufDB8fHx8MTc3MzI2NDM2OHww&ixlib=rb-4.1.0&q=85",
+  rustic2: "https://images.unsplash.com/photo-1772864463642-42c789ab5dbd?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwzfHxydXN0aWMlMjBmb29kJTIwcHJlc2VudGF0aW9ufGVufDB8fHx8MTc3MzI2NDM2OHww&ixlib=rb-4.1.0&q=85",
+  
+  // Minimalist
+  minimal1: "https://images.unsplash.com/photo-1673663095536-4d8a5a1fb930?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwZm9vZCUyMHBsYXRpbmd8ZW58MHx8fHwxNzczMjY0Mzc5fDA&ixlib=rb-4.1.0&q=85",
+  minimal2: "https://images.unsplash.com/photo-1673663095512-b188c4604a5a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwZm9vZCUyMHBsYXRpbmd8ZW58MHx8fHwxNzczMjY0Mzc5fDA&ixlib=rb-4.1.0&q=85",
+  
+  // Desserts
+  dessert1: "https://images.unsplash.com/photo-1761138785146-7b5ad15851b2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwxfHxnb3VybWV0JTIwZGVzc2VydCUyMHBsYXRpbmd8ZW58MHx8fHwxNzczMjY0Mzg5fDA&ixlib=rb-4.1.0&q=85",
+  dessert2: "https://images.unsplash.com/photo-1759277513461-41fde7d24083?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwZGVzc2VydCUyMHBsYXRpbmd8ZW58MHx8fHwxNzczMjY0Mzg5fDA&ixlib=rb-4.1.0&q=85",
   
   // Techniques
   tech1: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-A-lVAzBRTlwxXMdoenHrNl6nNcgFJvjsf9xU1PrKdawdyg3MPpnJUBrf2U2ck0aZVJY2dwPHn1GytZp7nAviMUmE_7BugHQY-jt-gMe-LkQ8VfocqEHXv6EhFGq4PfC9ld_MWgXja1HbE56i2TJIqnQEFXDpv-VSLYjsFt20U2tYBzz-ZmQCQffUiEXQ14Pb8fMi5n-wRsrERhgGQr9_hS5s4Fj9dJ2jIaifQWU51wcSnPfS5QPovT3M7FcrW5xtEBeThqNy3TYu",
