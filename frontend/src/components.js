@@ -575,7 +575,7 @@ const InspirationCard = ({ card, isFavorited, onToggleFavorite }) => {
 };
 
 // Masonry Grid
-export const MasonryGrid = ({ activeFilter, searchQuery }) => {
+export const MasonryGrid = ({ activeFilter, searchQuery, activeSkillLevel, sortBy }) => {
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('plateme_favorites');
     return saved ? JSON.parse(saved) : [];
@@ -591,14 +591,29 @@ export const MasonryGrid = ({ activeFilter, searchQuery }) => {
     });
   };
 
-  // Filter cards based on active filter and search query
-  const filteredCards = ALL_CARDS.filter(card => {
+  // Filter cards based on active filter, search query, and skill level
+  let filteredCards = ALL_CARDS.filter(card => {
     const matchesFilter = activeFilter === 'all' || card.category === activeFilter;
     const matchesSearch = !searchQuery || 
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       card.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+    const matchesSkillLevel = activeSkillLevel === 'All Levels' || card.level === activeSkillLevel;
+    return matchesFilter && matchesSearch && matchesSkillLevel;
   });
+
+  // Sort cards
+  if (sortBy === 'popular') {
+    filteredCards = [...filteredCards].sort((a, b) => {
+      const aViews = parseFloat(a.views.replace('k', '')) * 1000;
+      const bViews = parseFloat(b.views.replace('k', '')) * 1000;
+      return bViews - aViews;
+    });
+  } else if (sortBy === 'newest') {
+    filteredCards = [...filteredCards].reverse();
+  } else if (sortBy === 'skill') {
+    const skillOrder = { 'Beginner': 1, 'Intermediate': 2, 'Advanced': 3, 'Expert': 4 };
+    filteredCards = [...filteredCards].sort((a, b) => skillOrder[a.level] - skillOrder[b.level]);
+  }
 
   return (
     <div className="columns-1 md:columns-2 gap-6 space-y-6">
@@ -612,9 +627,10 @@ export const MasonryGrid = ({ activeFilter, searchQuery }) => {
           />
         ))
       ) : (
-        <div className="col-span-full text-center py-12">
-          <p className="text-slate-400 text-lg">No plates found matching your criteria.</p>
-          <p className="text-slate-500 text-sm mt-2">Try adjusting your filters or search query.</p>
+        <div className="col-span-full text-center py-12 bg-surface-dark rounded-xl border border-slate-800">
+          <span className="material-symbols-outlined text-6xl text-slate-600 mb-4 block">search_off</span>
+          <p className="text-slate-400 text-lg font-semibold">No plates found matching your criteria.</p>
+          <p className="text-slate-500 text-sm mt-2">Try adjusting your filters, skill level, or search query.</p>
         </div>
       )}
     </div>
