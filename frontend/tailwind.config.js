@@ -4,18 +4,27 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html"
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      fontFamily: {
-        display: ["Space Grotesk", "Inter", "ui-sans-serif", "system-ui"],
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
-      },
       colors: {
-        brand: {
-          bg: "#0b0b0c",
-        }
+        primary: "#2bee72",
+        "background-light": "#f6f8f6",
+        "background-dark": "#111813",
+        "surface-dark": "#1d2921",
+        "surface-light": "#ffffff"
+      },
+      fontFamily: {
+        display: ["Work Sans", "sans-serif"],
+        body: ["Noto Sans", "sans-serif"]
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px"
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: []
 };
