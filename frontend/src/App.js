@@ -25,6 +25,11 @@ function Dashboard() {
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(1);
 
+  // Set document title
+  useEffect(() => {
+    document.title = "Plate Me - Culinary Plating Inspiration & Techniques";
+  }, []);
+
   // Initialize stats from localStorage
   useEffect(() => {
     const favorites = localStorage.getItem('plateme_favorites');
