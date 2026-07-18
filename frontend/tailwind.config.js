@@ -8,20 +8,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#2bee72",
-        "background-light": "#f6f8f6",
-        "background-dark": "#111813",
-        "surface-dark": "#1d2921",
+        primary: "#EC5B13",
+        "background-light": "#F4F1EC",
+        "background-dark": "#0D0D0D",
+        "surface-dark": "#141414",
         "surface-light": "#ffffff"
       },
       fontFamily: {
-        display: ["Work Sans", "sans-serif"],
-        body: ["Noto Sans", "sans-serif"]
+        display: ["Bebas Neue", "Impact", "sans-serif"],
+        body: ["DM Sans", "sans-serif"],
+        mono: ["IBM Plex Mono", "monospace"]
       },
       borderRadius: {
         DEFAULT: "0.25rem",
         lg: "0.5rem",
-        xl: "0.75rem",
+        xl: "0.5rem",
         full: "9999px"
       }
     }
