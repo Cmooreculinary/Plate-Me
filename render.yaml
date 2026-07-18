@@ -6,11 +6,13 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/health
+    disk:
+      name: plate-me-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
-      - key: MONGO_URL
-        sync: false
-      - key: DB_NAME
-        value: plate_me
+      - key: SQLITE_PATH
+        value: /var/data/plate_me.db
       - key: CORS_ORIGINS
         sync: false
 

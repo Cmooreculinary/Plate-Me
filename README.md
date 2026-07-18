@@ -9,7 +9,7 @@ Create a new Render Blueprint from this repository's `main` branch. The root `re
 Set these backend environment variables in Render:
 
 ```text
-MONGO_URL=mongodb+srv://...
+# SQLite is file-based — no database URL needed. SQLITE_PATH is set in render.yaml.
 CORS_ORIGINS=https://plate-me.onrender.com
 ```
 
